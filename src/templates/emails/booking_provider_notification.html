@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}New Booking Request - {{ company_name }}{% endblock %}
+
+{% block heading %}New Booking Request!{% endblock %}
+
+{% block content %}
+<p style="font-size: 18px; margin-bottom: 20px;">
+    Dear <strong>{{ provider_name }}</strong>,
+</p>
+
+<!-- Success Alert -->
+<div style="background-color: #D1FAE5; border-left: 4px solid #10B981; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #065F46; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">🎉</span>
+        You have received a new booking request for your services!
+    </p>
+</div>
+
+<!-- Booking Details Card -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h3 style="color: {{ colors.purple }}; margin-top: 0; font-size: 18px;">
+        📋 Booking Details
+    </h3>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Booking ID:</strong> <code style="background: white; padding: 2px 6px; border-radius: 4px; font-size: 13px;">#{{ booking_id }}</code>
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Service:</strong> {{ service_description }}
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Category:</strong> {{ service_category }}
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Sub-Category:</strong> {{ sub_category }}
+    </p>
+    {% if booking_date %}
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Requested Date:</strong> {{ booking_date }}
+    </p>
+    {% endif %}
+    {% if additional_notes %}
+    <p style="margin: 15px 0 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Customer Notes:</strong>
+    </p>
+    <div style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid {{ colors.orange }};">
+        <p style="margin: 0; font-size: 14px; color: {{ colors.dark_text }}; font-style: italic;">
+            "{{ additional_notes }}"
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Customer Information Card -->
+<div style="background-color: #EFF6FF; border-radius: 8px; padding: 20px; margin: 30px 0; border-left: 4px solid #3B82F6;">
+    <h3 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 18px;">
+        👤 Customer Information
+    </h3>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Name:</strong> {{ customer_name }}
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Email:</strong> <a href="mailto:{{ customer_email }}" style="color: {{ colors.purple }}; text-decoration: none;">{{ customer_email }}</a>
+    </p>
+</div>
+
+<!-- CTA Button -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ dashboard_link }}" style="display: inline-block; background: linear-gradient(135deg, {{ colors.purple }} 0%, {{ colors.orange }} 100%); color: white; padding: 14px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(107, 33, 168, 0.3);">
+        View Booking Request
+    </a>
+</div>
+
+<!-- Info Alert -->
+<div style="background-color: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #1E40AF; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">💡</span>
+        Please review and respond to this booking request as soon as possible.
+    </p>
+</div>
+
+<p style="margin-top: 30px; color: {{ colors.dark_text }};">
+    Best regards,<br>
+    <strong>The {{ company_name }} Team</strong>
+</p>
+
+{% endblock %}

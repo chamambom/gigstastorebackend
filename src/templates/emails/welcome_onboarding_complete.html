@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to {{ company_name }}!{% endblock %}
+
+{% block heading %}Welcome to {{ company_name }}!{% endblock %}
+
+{% block content %}
+<p style="font-size: 18px; margin-bottom: 20px;">
+    Hi <strong>{{ user_name }}</strong>,
+</p>
+
+<!-- Success Alert -->
+<div style="background-color: #D1FAE5; border-left: 4px solid #10B981; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #065F46; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">🎉</span>
+        Congratulations! Your onboarding is complete.
+    </p>
+</div>
+
+<p style="margin: 20px 0;">
+    Your billing setup is complete, and you've been subscribed to <strong style="color: {{ colors.purple }};">Solo Hustle</strong> for free!
+</p>
+
+<!-- Subscription Details Card -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h3 style="color: {{ colors.purple }}; margin-top: 0; font-size: 18px;">
+        📋 Your Subscription Details
+    </h3>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Plan:</strong> Solo Hustle (Free)
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Subscription ID:</strong> <code style="background: white; padding: 2px 6px; border-radius: 4px; font-size: 13px;">{{ subscription_id }}</code>
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Status:</strong> <span style="color: #10B981; font-weight: 600;">Active</span>
+    </p>
+</div>
+
+<!-- Next Steps -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 20px; margin: 30px 0 15px 0;">
+    🚀 What's Next?
+</h3>
+
+<!-- Info Alert for Approval -->
+<div style="background-color: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #1E40AF; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">⏳</span>
+        Your account is pending approval from the {{ company_name }} team.
+    </p>
+</div>
+
+<p style="margin: 20px 0; color: {{ colors.dark_text }};">
+    We're reviewing your profile to ensure the best experience for our community. You'll receive an email notification once your account is approved.
+</p>
+
+<div style="margin: 20px 0;">
+    <p style="margin-bottom: 10px; font-weight: 600; color: {{ colors.dark_text }};">
+        Once approved, you'll be able to:
+    </p>
+    <ul style="margin: 0; padding-left: 20px; color: {{ colors.dark_text }};">
+        <li style="margin-bottom: 8px;">✨ List your services and set your pricing</li>
+        <li style="margin-bottom: 8px;">📅 Accept bookings from customers</li>
+        <li style="margin-bottom: 8px;">💰 Receive payments securely</li>
+        <li style="margin-bottom: 8px;">📊 Track your earnings and performance</li>
+    </ul>
+</div>
+
+<!-- CTA Button -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ dashboard_link }}" style="display: inline-block; background: linear-gradient(135deg, {{ colors.purple }} 0%, {{ colors.orange }} 100%); color: white; padding: 14px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(107, 33, 168, 0.3);">
+        Go to Dashboard
+    </a>
+</div>
+
+<!-- Divider -->
+<hr style="border: none; border-top: 1px solid #E5E7EB; margin: 30px 0;">
+
+<!-- Manage Subscription -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 18px; margin: 20px 0 10px 0;">
+    💳 Manage Your Subscription
+</h3>
+
+<p style="margin: 10px 0; color: {{ colors.dark_text }}; font-size: 14px;">
+    Ready to unlock more features? You can upgrade your plan or manage your payment methods anytime from your account dashboard.
+</p>
+
+<p style="margin: 20px 0;">
+    <a href="{{ dashboard_link }}/subscription" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">
+        Manage Billing & Subscription →
+    </a>
+</p>
+
+<!-- Support -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h4 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 16px;">
+        💬 Need Help?
+    </h4>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        Our support team is here to help you succeed. If you have any questions or need assistance, don't hesitate to reach out.
+    </p>
+    <p style="margin: 10px 0;">
+        <a href="{{ frontend_url }}/contact" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Contact Support</a>
+        <span style="color: {{ colors.light_text }}; margin: 0 10px;">|</span>
+        <a href="{{ frontend_url }}/faq" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Visit Help Center</a>
+    </p>
+</div>
+
+<p style="margin-top: 30px; color: {{ colors.dark_text }};">
+    Thank you for joining {{ company_name }}! We're excited to have you as part of our community.
+</p>
+
+<p style="margin-top: 20px; color: {{ colors.dark_text }};">
+    Best regards,<br>
+    <strong>The {{ company_name }} Team</strong>
+</p>
+
+{% endblock %}
+
+{% block footer_message %}Welcome to the {{ company_name }} community! 🎉{% endblock %}

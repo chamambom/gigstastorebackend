@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Provider Application Update - {{ company_name }}{% endblock %}
+
+{% block heading %}Application Status Update{% endblock %}
+
+{% block content %}
+<p style="font-size: 18px; margin-bottom: 20px;">
+    Hi <strong>{{ provider_name }}</strong>,
+</p>
+
+<p style="margin: 20px 0; color: {{ colors.dark_text }};">
+    Thank you for your interest in becoming a service provider on {{ company_name }}. We appreciate the time you took to complete your application.
+</p>
+
+<!-- Info Alert -->
+<div style="background-color: #FEE2E2; border-left: 4px solid #EF4444; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #991B1B; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">ℹ️</span>
+        After careful review, we're unable to approve your provider application at this time.
+    </p>
+</div>
+
+<p style="margin: 20px 0; color: {{ colors.dark_text }};">
+    This decision was made after reviewing your application against our provider criteria. We maintain high standards to ensure the best experience for our customers and providers.
+</p>
+
+{% if rejection_reason %}
+<!-- Reason Card -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h3 style="color: {{ colors.purple }}; margin-top: 0; font-size: 18px;">
+        📋 Reason for Decision
+    </h3>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        {{ rejection_reason }}
+    </p>
+</div>
+{% endif %}
+
+<!-- What This Means -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 18px; margin: 30px 0 15px 0;">
+    🔄 What This Means
+</h3>
+
+<div style="margin: 20px 0;">
+    <p style="margin-bottom: 10px; color: {{ colors.dark_text }}; font-size: 14px;">
+        • Your provider account has not been activated
+    </p>
+    <p style="margin-bottom: 10px; color: {{ colors.dark_text }}; font-size: 14px;">
+        • You won't be able to list services or accept bookings at this time
+    </p>
+    <p style="margin-bottom: 10px; color: {{ colors.dark_text }}; font-size: 14px;">
+        • Your regular customer account remains active
+    </p>
+</div>
+
+<!-- Reapply Option -->
+<div style="background-color: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 16px 20px; margin: 30px 0;">
+    <h4 style="color: #1E40AF; margin-top: 0; font-size: 16px;">
+        💡 Interested in Reapplying?
+    </h4>
+    <p style="margin: 10px 0; color: #1E40AF; font-size: 14px;">
+        You may reapply after addressing the concerns mentioned above. We recommend:
+    </p>
+    <ul style="margin: 10px 0; padding-left: 20px; color: #1E40AF; font-size: 14px;">
+        <li style="margin-bottom: 8px;">Reviewing our provider requirements</li>
+        <li style="margin-bottom: 8px;">Ensuring your credentials are complete and verified</li>
+        <li style="margin-bottom: 8px;">Providing additional documentation if needed</li>
+        <li>Contacting our support team for guidance</li>
+    </ul>
+</div>
+
+<!-- Alternative Options -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h4 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 16px;">
+        🛍️ You Can Still Use {{ company_name }}
+    </h4>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        While your provider application wasn't approved, you can still:
+    </p>
+    <ul style="margin: 10px 0; padding-left: 20px; color: {{ colors.dark_text }}; font-size: 14px;">
+        <li style="margin-bottom: 8px;">Book services from our approved providers</li>
+        <li style="margin-bottom: 8px;">Leave reviews and ratings</li>
+        <li style="margin-bottom: 8px;">Manage your bookings and payments</li>
+    </ul>
+    <p style="margin: 15px 0;">
+        <a href="{{ dashboard_link }}" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">
+            Go to Your Dashboard →
+        </a>
+    </p>
+</div>
+
+<!-- Support Section -->
+<div style="background-color: #EFF6FF; border-radius: 8px; padding: 20px; margin: 30px 0; border-left: 4px solid #3B82F6;">
+    <h4 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 16px;">
+        💬 Have Questions?
+    </h4>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        If you'd like to discuss this decision or need clarification, please don't hesitate to contact our support team.
+    </p>
+    <p style="margin: 10px 0;">
+        <a href="{{ frontend_url }}/contact" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Contact Support</a>
+        <span style="color: {{ colors.light_text }}; margin: 0 10px;">|</span>
+        <a href="{{ frontend_url }}/provider-requirements" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">View Requirements</a>
+    </p>
+</div>
+
+<p style="margin-top: 30px; color: {{ colors.dark_text }};">
+    We appreciate your understanding and thank you again for your interest in {{ company_name }}.
+</p>
+
+<p style="margin-top: 20px; color: {{ colors.dark_text }};">
+    Best regards,<br>
+    <strong>The {{ company_name }} Team</strong>
+</p>
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to {{ company_name }}!{% endblock %}
+
+{% block heading %}Welcome to {{ company_name }}!{% endblock %}
+
+{% block content %}
+<p style="font-size: 18px; margin-bottom: 20px;">
+    Hi <strong>{{ user_name }}</strong>,
+</p>
+
+<!-- Success Alert -->
+<div style="background-color: #D1FAE5; border-left: 4px solid #10B981; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #065F46; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">🎉</span>
+        Welcome to the {{ company_name }} community!
+    </p>
+</div>
+
+<p style="margin: 20px 0; color: {{ colors.dark_text }};">
+    We're thrilled to have you join our platform connecting service providers and customers across New Zealand.
+</p>
+
+<!-- Next Steps Card -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h3 style="color: {{ colors.purple }}; margin-top: 0; font-size: 18px;">
+        🚀 Let's Get You Started
+    </h3>
+    
+    {% if is_oauth_user %}
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        Your account has been created and verified. Here's what you can do next:
+    </p>
+    {% else %}
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        Before you dive in, please verify your email address to activate your account.
+    </p>
+    {% endif %}
+</div>
+
+{% if not is_oauth_user %}
+<!-- Verification Reminder -->
+<div style="background-color: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #1E40AF; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">📧</span>
+        Check your inbox for a verification email and click the link to verify your account.
+    </p>
+</div>
+{% endif %}
+
+<!-- What You Can Do -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 20px; margin: 30px 0 15px 0;">
+    💡 What Can You Do on {{ company_name }}?
+</h3>
+
+<div style="margin: 20px 0;">
+    <div style="margin-bottom: 20px; padding: 15px; background: #F9FAFB; border-radius: 8px; border-left: 3px solid {{ colors.purple }};">
+        <p style="margin: 0; font-weight: 600; color: {{ colors.dark_text }};">
+            🔍 <strong>Find Services</strong>
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: {{ colors.light_text }};">
+            Browse and book from hundreds of local service providers
+        </p>
+    </div>
+    
+    <div style="margin-bottom: 20px; padding: 15px; background: #F9FAFB; border-radius: 8px; border-left: 3px solid {{ colors.orange }};">
+        <p style="margin: 0; font-weight: 600; color: {{ colors.dark_text }};">
+            💼 <strong>Offer Your Services</strong>
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: {{ colors.light_text }};">
+            Complete your profile to become a service provider and start earning
+        </p>
+    </div>
+    
+    <div style="margin-bottom: 20px; padding: 15px; background: #F9FAFB; border-radius: 8px; border-left: 3px solid {{ colors.purple }};">
+        <p style="margin: 0; font-weight: 600; color: {{ colors.dark_text }};">
+            💰 <strong>Secure Payments</strong>
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: {{ colors.light_text }};">
+            All transactions are handled securely through Stripe
+        </p>
+    </div>
+    
+    <div style="padding: 15px; background: #F9FAFB; border-radius: 8px; border-left: 3px solid {{ colors.orange }};">
+        <p style="margin: 0; font-weight: 600; color: {{ colors.dark_text }};">
+            ⭐ <strong>Reviews & Ratings</strong>
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: {{ colors.light_text }};">
+            Build trust through authentic customer reviews
+        </p>
+    </div>
+</div>
+
+<!-- CTA Button -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ dashboard_link }}" style="display: inline-block; background: linear-gradient(135deg, {{ colors.purple }} 0%, {{ colors.orange }} 100%); color: white; padding: 14px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(107, 33, 168, 0.3);">
+        {% if is_oauth_user %}
+        Browse existing Services or Become a GigSta
+        {% else %}
+        Get Started
+        {% endif %}
+    </a>
+</div>
+
+<!-- Help Section -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h4 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 16px;">
+        📚 New to {{ company_name }}?
+    </h4>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        Check out our resources to make the most of your experience:
+    </p>
+    <p style="margin: 10px 0;">
+        <a href="{{ frontend_url }}/about" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">How It Works</a>
+        <span style="color: {{ colors.light_text }}; margin: 0 10px;">|</span>
+        <a href="{{ frontend_url }}/faq" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Help Center</a>
+        <span style="color: {{ colors.light_text }}; margin: 0 10px;">|</span>
+        <a href="{{ frontend_url }}/contact" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Contact Support</a>
+    </p>
+</div>
+
+<!-- Social Proof (Optional) -->
+<div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, rgba(107, 33, 168, 0.05) 0%, rgba(251, 146, 60, 0.05) 100%); border-radius: 8px;">
+    <p style="margin: 0; font-size: 14px; color: {{ colors.dark_text }};">
+        Join thousands of happy customers and providers already using {{ company_name }}
+    </p>
+</div>
+
+<p style="margin-top: 30px; color: {{ colors.dark_text }};">
+    We're here to help you every step of the way. If you have any questions, don't hesitate to reach out!
+</p>
+
+<p style="margin-top: 20px; color: {{ colors.dark_text }};">
+    Best regards,<br>
+    <strong>The {{ company_name }} Team</strong>
+</p>
+
+<p style="font-size: 12px; color: {{ colors.light_text }}; margin-top: 30px; padding-top: 20px; border-top: 1px solid #E5E7EB;">
+    You're receiving this email because you just created an account at {{ company_name }}.
+</p>
+
+{% endblock %}
+
+{% block footer_message %}Welcome aboard! We're excited to have you. 🚀{% endblock %}

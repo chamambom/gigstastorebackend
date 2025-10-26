@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Commission Payment Due - {{ company_name }}{% endblock %}
+
+{% block heading %}Commission Payment Due{% endblock %}
+
+{% block content %}
+<p style="font-size: 18px; margin-bottom: 20px;">
+    Dear <strong>{{ provider_name }}</strong>,
+</p>
+
+<!-- Warning Alert -->
+<div style="background-color: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #92400E; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">💰</span>
+        Your commission payment for a completed booking is now due.
+    </p>
+</div>
+
+<p style="margin: 20px 0; color: {{ colors.dark_text }};">
+    Thank you for providing excellent service through {{ company_name }}. The commission for your recent booking is ready to be paid.
+</p>
+
+<!-- Payment Details Card -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h3 style="color: {{ colors.purple }}; margin-top: 0; font-size: 18px;">
+        📋 Payment Details
+    </h3>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Booking ID:</strong> <code style="background: white; padding: 2px 6px; border-radius: 4px; font-size: 13px;">#{{ booking_id }}</code>
+    </p>
+    <p style="margin: 10px 0; font-size: 16px; color: {{ colors.dark_text }};">
+        <strong>Amount Due:</strong> <span style="color: {{ colors.purple }}; font-size: 20px; font-weight: 700;">{{ commission_amount }} {{ currency }}</span>
+    </p>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Due Date:</strong> {{ due_date }}
+    </p>
+    {% if invoice_id %}
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        <strong>Invoice ID:</strong> <code style="background: white; padding: 2px 6px; border-radius: 4px; font-size: 13px;">{{ invoice_id }}</code>
+    </p>
+    {% endif %}
+</div>
+
+<!-- Primary CTA Button -->
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ payment_link }}" style="display: inline-block; background: linear-gradient(135deg, {{ colors.purple }} 0%, {{ colors.orange }} 100%); color: white; padding: 14px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(107, 33, 168, 0.3);">
+        Pay Commission Now
+    </a>
+</div>
+
+<!-- Info Alert -->
+<div style="background-color: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 16px 20px; margin: 20px 0;">
+    <p style="margin: 0; color: #1E40AF; font-weight: 600;">
+        <span style="font-size: 18px; margin-right: 8px;">🔒</span>
+        This payment link directs you to a secure Stripe-hosted page to complete the transaction.
+    </p>
+</div>
+
+<!-- Alternative Payment Methods -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 18px; margin: 30px 0 15px 0;">
+    💳 Other Ways to Pay
+</h3>
+
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 20px 0;">
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        You can also view and pay all your open invoices from your dashboard:
+    </p>
+    <p style="margin: 15px 0;">
+        <a href="{{ invoices_link }}" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600; font-size: 14px;">
+            View All Invoices →
+        </a>
+    </p>
+</div>
+
+<!-- Important Information -->
+<h3 style="color: {{ colors.dark_text }}; font-size: 18px; margin: 30px 0 15px 0;">
+    📌 Important Information
+</h3>
+
+<div style="margin: 20px 0;">
+    <ul style="margin: 0; padding-left: 20px; color: {{ colors.dark_text }}; font-size: 14px;">
+        <li style="margin-bottom: 10px;">Commission payments support the platform and help us continue providing great service</li>
+        <li style="margin-bottom: 10px;">Payment is securely processed through Stripe</li>
+        <li style="margin-bottom: 10px;">You'll receive a receipt immediately after payment</li>
+        <li style="margin-bottom: 10px;">Late payments may affect your account status</li>
+    </ul>
+</div>
+
+<!-- Help Section -->
+<div style="background-color: {{ colors.light_gray }}; border-radius: 8px; padding: 20px; margin: 30px 0;">
+    <h4 style="color: {{ colors.dark_text }}; margin-top: 0; font-size: 16px;">
+        💬 Need Help?
+    </h4>
+    <p style="margin: 10px 0; font-size: 14px; color: {{ colors.dark_text }};">
+        If you have any questions about this commission payment or need assistance, our support team is here to help.
+    </p>
+    <p style="margin: 10px 0;">
+        <a href="{{ frontend_url }}/contact" style="color: {{ colors.purple }}; text-decoration: none; font-weight: 600;">Contact Support</a>
+    </p>
+</div>
+
+<p style="margin-top: 30px; color: {{ colors.dark_text }};">
+    Thank you for being a valued part of the {{ company_name }} community!
+</p>
+
+<p style="margin-top: 20px; color: {{ colors.dark_text }};">
+    Best regards,<br>
+    <strong>The {{ company_name }} Team</strong>
+</p>
+
+{% endblock %}
+
+{% block footer_message %}Thank you for your partnership with {{ company_name }}!{% endblock %}
