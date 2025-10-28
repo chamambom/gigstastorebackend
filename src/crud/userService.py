@@ -107,7 +107,7 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
 
             await send_email(
                 email=user.email,
-                subject=f"Welcome to {settings.PLATFORM_NAME or 'Gigsta'}! 🎉",
+                subject=f"Welcome to {settings.PLATFORM_NAME or 'GigstaStore'}! 🎉",
                 message=html_content
             )
 

@@ -12,25 +12,42 @@ from src.config.settings import settings
 class EmailRenderer:
     """Renders email templates using Jinja2"""
 
-    def __init__(self, template_dir: str = "src/templates/emails"):
+    def __init__(self, template_dir: str = "../templates/emails"):
         """
         Initialize email renderer
 
         Args:
             template_dir: Directory containing email template files
         """
-        self.template_dir = Path(template_dir)
+        # 1. Anchor the path resolution to the file containing this class.
+        #    This finds the absolute path of the directory holding email_renderer.py
+        anchor_dir = Path(__file__).resolve().parent
+
+        # 2. Determine the path to the project root (The directory containing 'src').
+        #    This loop walks up the tree until it finds the folder named 'src'.
+        project_root = anchor_dir
+        while project_root.name != 'src' and project_root.parent != project_root:
+            project_root = project_root.parent
+
+        # 3. If 'src' was found, use its parent as the true root to resolve the full path.
+        if project_root.name == 'src':
+            self.template_dir = project_root.parent / template_dir
+        else:
+            # Fallback if the standard structure is not found (CWD-dependent, like your original code)
+            self.template_dir = Path(template_dir)
+
+            # Ensure directory exists (harmless with exist_ok=True, and now uses the correct path)
         self.template_dir.mkdir(parents=True, exist_ok=True)
 
         self.env = Environment(
-            loader=FileSystemLoader(self.template_dir),
+            loader=FileSystemLoader(self.template_dir),  # Jinja2 gets the ABSOLUTE path
             autoescape=select_autoescape(['html', 'xml'])
         )
 
         # Brand configuration - change once, applies everywhere
         self.brand_config = {
-            'logo_url': 'https://afrimall.co.nz/images/preview.png',
-            'frontend_url': 'https://afrimall.co.nz',
+            'logo_url': 'https://gigstastore/images/preview.png',
+            'frontend_url': 'https://gigstastore.co.nz',
             'colors': {
                 'purple': '#6B21A8',
                 'orange': '#FB923C',
@@ -39,7 +56,7 @@ class EmailRenderer:
                 'light_text': '#6B7280',
             },
             'company_name': 'Gigsta',
-            'support_email': 'support@gigsta.co.nz',
+            'support_email': 'support@gigstastore.co.nz',
             'year': datetime.utcnow().year
         }
 
