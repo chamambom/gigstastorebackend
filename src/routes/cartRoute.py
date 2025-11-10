@@ -81,3 +81,4 @@ async def clear_cart(current_user: User = Depends(current_active_user)):
     cart = await CartService.clear_cart(current_user.id)
     cart_data = await CartService.get_cart_with_products(current_user.id)
     return cart_data
+

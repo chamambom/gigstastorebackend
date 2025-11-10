@@ -23,10 +23,19 @@ async def create_product(
         current_user: User = Depends(current_active_user)
 ):
     """Create a new product (sellers only)"""
+    # NOTE: current_user must have the 'stripe_connect_account_id' field accessible
     try:
         product = await ProductService.create_product(current_user.id, product_data)
         return product
     except ValueError as e:
+        # This catches both the 'Stripe Connect account not linked' and the 'Stripe integration failed' errors
+        error_detail = str(e)
+        status_code = status.HTTP_400_BAD_REQUEST
+
+        if "Stripe integration failed" in error_detail:
+            # If the Stripe API call failed, treat it as a service error
+            status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e)

@@ -11,6 +11,8 @@ from fastapi_users.authentication import (
 from fastapi_users.db import BeanieUserDatabase, ObjectIDIDMixin
 from httpx_oauth.clients.google import GoogleOAuth2
 from httpx_oauth.clients.facebook import FacebookOAuth2
+
+from commonUtils.enumUtils import StripeProviderStatus
 # from app.db import User, get_user_db
 from src.models.userModel import User, get_user_db
 from src.schemas.userSchema import ProviderOnboarding, Address, OnboardingStatus
@@ -70,7 +72,8 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
         user.onboarding_status = {
             "basic_complete": False,
             "provider_onboarding_complete": False,
-            "billing_setup_complete": False
+            "stripe_activate_subscription_complete": False,
+            "stripe_activate_connect_complete": False
         }
 
         # Check if the user has one or more OAuth accounts.
@@ -246,12 +249,15 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
         # This is the key flag this function is responsible for setting
         user.onboarding_status.provider_onboarding_complete = True
 
-        # Do NOT set billing_setup_complete here
+        # Do NOT set activate_subscription_complete here
         # Do NOT call create_stripe_customer here
 
         # Add 'provider' role if not already present
         if "provider" not in user.roles:
             user.roles.append("provider")
+
+            # Set status to indicate onboarding is in progress/complete
+        user.stripe_provider_status = StripeProviderStatus.ONBOARDING_IN_PROGRESS
 
         await user.save()
 
@@ -337,6 +343,13 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
             logger.error(f"Failed to send password reset confirmation email to {user.email}: {str(e)}")
             # Don't re-raise - we don't want email failures to break password reset
             pass
+
+    # Example addition to your UserManager or User CRUD service:
+
+    async def get_user_by_stripe_connect_id(self, connect_id: str) -> Optional[User]:
+        """Retrieves a User record using their Stripe Connect Account ID."""
+        # Assuming User is a Motor/Beanie/Pymongo model
+        return await User.find_one(User.stripe_connect_account_id == connect_id)
 
 
 async def get_user_manager(user_db: BeanieUserDatabase = Depends(get_user_db)):

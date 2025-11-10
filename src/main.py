@@ -11,13 +11,12 @@ import logging
 
 from src.config.settings import settings
 from src.config.database import startDB
-from src.routes import userRoute
-# from src.routes import r2CleanupRoute
-# from src.schedulers.r2_scheduler import r2_scheduler
-from src.routes import userRoute, productRoute, cartRoute, addressableAPIRoute, userOnboarding, \
-    stripeSubscriptionServices
+from src.routes import r2CleanupRoute
+from src.schedulers.r2_scheduler import r2_scheduler
+from src.routes import userRoute, productRoute, cartRoute, addressableAPIRoute, userOnboardingRoute, \
+    stripeSubscriptionServices, stripeWebhookHandler, mediaUploadRoute, checkOutRoute
+from src.adminUtils.adminRoutes import approveProviderRoute, admin_provider_routes, stripeAdministrationRoutes
 
-# from src.stripeRoutes import stripeSubscriptionServices, stripeWebhookHandler
 # from src.adminUtils.adminRoutes import approveProviderRoute, admin_provider_routes
 
 # Configure logging
@@ -187,30 +186,32 @@ app.include_router(cartRoute.router, tags=['cart'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
 # app.include_router(ratingRoute.router, tags=['ratings'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
-# app.include_router(stripeWebhookHandler.router, tags=['stripe-webhook'], prefix='/api/v1',
-#                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
-app.include_router(stripeSubscriptionServices.router, tags=['stripe-subs'], prefix='/api/v1',
+app.include_router(stripeWebhookHandler.router, tags=['StripeWebhook'], prefix='/api/v1',
+                   dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(stripeSubscriptionServices.router, tags=['StripeSubs'], prefix='/api/v1',
+                   dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(checkOutRoute.router, tags=['checkout'], prefix='/api/v1',
                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
 # app.include_router(providerRoute.router, tags=['provider-checks'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
 # app.include_router(providerAvailabilityRoute.router, tags=['provider-availability'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
-# app.include_router(mediaUploadRoute.router, tags=['UserMediaManagement'], prefix='/api/v1',
-#                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
-app.include_router(addressableAPIRoute.router, tags=['3rd-party-apis'], prefix='/api/v1',
+app.include_router(mediaUploadRoute.router, tags=['UserMediaManagement'], prefix='/api/v1',
+                   dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(addressableAPIRoute.router, tags=['3rdPartyAPIs'], prefix='/api/v1',
                    dependencies=[Depends(RateLimiter(times=10, seconds=60))]),
-app.include_router(userOnboarding.router, tags=['user-onboarding'], prefix='/api/v1',
+app.include_router(userOnboardingRoute.router, tags=['UserOnboarding'], prefix='/api/v1',
                    dependencies=[Depends(RateLimiter(times=5, seconds=60))])
-
-
-# app.include_router(admin_provider_routes.router, tags=['AdminUtils'], prefix='/api/v1/admin/providers',
-#                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(admin_provider_routes.router, tags=['AdminUtils'], prefix='/api/v1/admin/providers',
+                   dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(stripeAdministrationRoutes.router, tags=['StripeAdminUtils'], prefix='/api/v1/admin/stripe',
+                   dependencies=[Depends(RateLimiter(times=100, seconds=60))])
 #
 # app.include_router(newsletterRoute.router, tags=['NotificationRoute'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 #
-# app.include_router(r2CleanupRoute.router, tags=['r2-cleanup'], prefix='/api/v1/admin',
-#                    dependencies=[Depends(RateLimiter(times=5, seconds=60))])
+app.include_router(r2CleanupRoute.router, tags=['r2-cleanup'], prefix='/api/v1/admin',
+                   dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 
 
 # Example of rate-limited route

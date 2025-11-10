@@ -5,6 +5,25 @@ from pydantic import BaseModel, Field, ConfigDict
 from enum import Enum
 
 
+# ============= CLOUDFLARE R2 MEDIA SCHEMAS =============
+
+# Add this new schema for the confirm upload endpoint's body
+class MediaConfirmSchema(BaseModel):
+    object_key: str
+    file_type: str
+    file_size: int
+
+
+# Update MediaFile to use `type` instead of `file_type` to match the confirmation
+# process and the model
+class MediaFile(BaseModel):
+    url: str
+    object_key: str = Field(...)  # Add this line
+    file_type: str  # e.g. "image", "video" -  `file_type`
+    size: Optional[int] = None  # in bytes, optional
+    uploaded_at: datetime = Field(default_factory=datetime.utcnow)
+
+
 class ProductStatus(str, Enum):
     DRAFT = "draft"
     PUBLISHED = "published"
@@ -27,7 +46,15 @@ class ProductCreate(BaseModel):
     description: str = Field(..., min_length=10)
     price: float = Field(..., gt=0)
     category: str = Field(..., min_length=1)
+    stock: int = Field(..., ge=0)  # Must be included in creation payload
     image: str
+    media: List[MediaFile] = Field(default_factory=list)  # ✅ better default
+
+    is_recurring: bool = False  # Default to false (one-time)
+    # Required only if is_recurring is True
+    # Options: 'day', 'week', 'month', 'year'
+    interval: Optional[str] = None
+
 
 
 class ProductUpdate(BaseModel):
@@ -36,8 +63,20 @@ class ProductUpdate(BaseModel):
     description: Optional[str] = Field(None, min_length=10)
     price: Optional[float] = Field(None, gt=0)
     category: Optional[str] = Field(None, min_length=1)
-    image: Optional[str] = None
+    # image: Optional[str] = None
     status: Optional[ProductStatus] = None
+    media: List[MediaFile] = Field(default_factory=list)  # ✅ better default
+    stock: Optional[int] = Field(None, ge=0)  # Must be included in update payload
+
+    is_recurring: bool = False  # Default to false (one-time)
+    # Required only if is_recurring is True
+    # Options: 'day', 'week', 'month', 'year'
+    interval: Optional[str] = None
+
+    model_config = ConfigDict(
+        populate_by_name=True,  # Enable from_orm to work with ORM models
+        from_attributes=True,  # This allows Pydantic to use aliases
+    )
 
 
 class ProductRead(BaseModel):
@@ -53,8 +92,17 @@ class ProductRead(BaseModel):
     created_at: datetime
     updated_at: datetime
     seller: Optional[SellerInfo] = None  # Include seller info
+    media: List[MediaFile] = Field(default_factory=list)  # ✅ better default
+    is_recurring: bool = False  # Default to false (one-time)
+    # Required only if is_recurring is True
+    # Options: 'day', 'week', 'month', 'year'
+    interval: Optional[str] = None
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(
+        populate_by_name=True,  # Enable from_orm to work with ORM models
+        from_attributes=True,  # This allows Pydantic to use aliases
+    )
+
 
 # ============= CART SCHEMAS =============
 class CartItemSchema(BaseModel):
@@ -91,7 +139,10 @@ class CartRead(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(
+        populate_by_name=True,  # Enable from_orm to work with ORM models
+        from_attributes=True,  # This allows Pydantic to use aliases
+    )
 
 
 # ============= WISHLIST SCHEMAS =============
@@ -132,7 +183,10 @@ class OrderRead(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(
+        populate_by_name=True,  # Enable from_orm to work with ORM models
+        from_attributes=True,  # This allows Pydantic to use aliases
+    )
 
 
 # ============= ERROR RESPONSE SCHEMAS =============

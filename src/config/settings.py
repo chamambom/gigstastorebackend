@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     ADDRESSABLE_API_KEY: str = os.environ["ADDRESSABLE_API_KEY"]
 
     PLATFORM_NAME: str = os.environ["PLATFORM_NAME"]
+    PLATFORM_FEE_PERCENTAGE: str = os.environ["PLATFORM_FEE_PERCENTAGE"]
 
     JWT_SECRET_KEY: str = os.environ["JWT_SECRET_KEY"]
     GOOGLE_OAUTH_CLIENT_ID: str = os.environ["GOOGLE_OAUTH_CLIENT_ID"]

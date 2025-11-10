@@ -52,8 +52,30 @@ class PaymentSource(str, Enum):
     TEST = "test"
 
 
-class ProviderStatus(str, Enum):
-    NOT_APPLIED = "not_applied"
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
+class StripeProviderStatus(str, Enum):
+    """
+    Tracks a provider's journey through the onboarding and verification process.
+
+    Flow:
+    1. NOT_STARTED → User hasn't begun provider onboarding
+    2. ONBOARDING_IN_PROGRESS → Basic profile/provider details being completed
+    3. ACTIVATE_SUBSCRIPTION_COMPLETE → Stripe Customer + Subscription created
+    4. CONNECT_VERIFICATION_PENDING → Stripe Connect account created, awaiting KYC/bank verification
+    5. ACTIVE → Fully verified, can accept bookings and receive payouts
+    6. REJECTED → Application rejected by platform or Stripe
+    """
+
+    # Initial States
+    NOT_STARTED = "not_started"  # User registered but hasn't started provider onboarding
+
+    # Onboarding States
+    ONBOARDING_IN_PROGRESS = "onboarding_in_progress"  # Completing profile/business details
+
+    # Billing & Connect States
+    ACTIVATE_SUBSCRIPTION_COMPLETE = "stripe_activate_subscription_complete"  # Stripe Customer created, ready for Connect
+    CONNECT_VERIFICATION_PENDING = "connect_verification_pending"  # Connect account created, awaiting Stripe
+    # verification
+
+    # Final States
+    ACTIVE = "active"  # Fully verified, charges_enabled=True, payouts_enabled=True
+    REJECTED = "rejected"  # Application rejected by platform or Stripe compliance

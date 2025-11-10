@@ -4,7 +4,7 @@ from beanie import Document
 from typing import List, Optional
 from pydantic import field_validator, model_validator, Field, BaseModel, ConfigDict
 from fastapi_users.db import BaseOAuthAccount, BeanieBaseUser, BeanieUserDatabase
-from src.commonUtils.enumUtils import ProviderStatus
+from src.commonUtils.enumUtils import StripeProviderStatus
 
 
 # from fastapi_users_db_beanie import BeanieUserDatabase
@@ -18,7 +18,9 @@ class OAuthAccount(BaseOAuthAccount):
 class OnboardingStatus(BaseModel):
     basic_complete: bool = False
     provider_onboarding_complete: bool = False
-    billing_setup_complete: bool = False
+    stripe_activate_subscription_complete: bool = False
+    stripe_activate_connect_complete: bool = False
+    stripe_connect_initiated_at: Optional[datetime] = None  # ✅ Add a timeout check:
 
 
 class Address(BaseModel):
@@ -40,7 +42,7 @@ class Address(BaseModel):
 
 class User(BeanieBaseUser, Document):
     hashed_password: Optional[str] = None
-    provider_status: ProviderStatus = ProviderStatus.NOT_APPLIED
+    stripe_provider_status: StripeProviderStatus = StripeProviderStatus.NOT_STARTED
     oauth_accounts: List[OAuthAccount] = Field(default_factory=list)
     full_name: Optional[str] = None
     profile_picture: Optional[str] = None
@@ -54,6 +56,7 @@ class User(BeanieBaseUser, Document):
     stripe_subscription_id: Optional[str] = None
     stripe_subscription_price_id: Optional[str] = None
     stripe_payment_method_id: Optional[str] = None
+    stripe_connect_account_id: Optional[str] = None
     overallProviderRating: Optional[float] = None
     totalProviderReviews: Optional[float] = None
 

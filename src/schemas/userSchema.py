@@ -5,7 +5,7 @@ from beanie import PydanticObjectId
 from fastapi_users import schemas
 from pydantic import Field, field_validator, BaseModel, conlist, condecimal, ConfigDict
 # Import OnboardingStatus and Address from your models file
-from src.models.userModel import OnboardingStatus, Address, ProviderStatus
+from src.models.userModel import OnboardingStatus, Address, StripeProviderStatus
 
 
 class UserRead(schemas.BaseUser[PydanticObjectId]):
@@ -20,7 +20,7 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
     is_superuser: bool
     # onboarding_status: dict
     onboarding_status: OnboardingStatus  # It should be an OnboardingStatus object
-    provider_status: ProviderStatus = ProviderStatus.NOT_APPLIED
+    stripe_provider_status: StripeProviderStatus = StripeProviderStatus.NOT_STARTED
     is_provisional: bool = True  # Default for new users
     is_oauth_registered: bool = False
     created_at: datetime
@@ -29,6 +29,7 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
     stripe_customer_id: Optional[str] = None
     stripe_subscription_id: Optional[str] = None
     stripe_payment_method_id: Optional[str] = None
+    stripe_connect_account_id: Optional[str] = None
 
     overallProviderRating: Optional[float] = None
     totalProviderReviews: Optional[float] = None
@@ -47,7 +48,7 @@ class UserCreate(schemas.BaseUserCreate):
                                      description="GeoJSON object for geospatial queries")  # Make location Optional
     # Make these Optional, as your on_after_register will set them
     onboarding_status: Optional[OnboardingStatus] = None  # <-- CHANGE HERE
-    provider_status: Optional[ProviderStatus] = None
+    stripe_provider_status: Optional[StripeProviderStatus] = None
     is_provisional: Optional[bool] = None
     is_oauth_registered: Optional[bool] = None
 
@@ -55,6 +56,7 @@ class UserCreate(schemas.BaseUserCreate):
     stripe_subscription_id: Optional[str] = None
     stripe_subscription_price_id: Optional[str] = None
     stripe_payment_method_id: Optional[str] = None
+    stripe_connect_account_id: Optional[str] = None
 
     overallProviderRating: Optional[float] = None
     totalProviderReviews: Optional[float] = None
@@ -70,12 +72,13 @@ class UserUpdate(schemas.BaseUserUpdate):
     is_provisional: Optional[bool] = None  # Allow updating provisional status
     is_oauth_registered: bool = Field(default=False)
     onboarding_status: Optional[OnboardingStatus] = None  # Allow updating the nested onboarding status
-    provider_status: Optional[ProviderStatus] = None  # It should be an ProviderStatus object
+    stripe_provider_status: Optional[StripeProviderStatus] = None  # It should be an ProviderStatus object
 
     stripe_subscription_price_id: Optional[str] = None
     stripe_customer_id: Optional[str] = None
     stripe_subscription_id: Optional[str] = None
     stripe_payment_method_id: Optional[str] = None
+    stripe_connect_account_id: Optional[str] = None
 
 
 class BasicUserCreate(schemas.BaseUserCreate):
