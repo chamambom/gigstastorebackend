@@ -14,7 +14,7 @@ from src.config.database import startDB
 from src.routes import r2CleanupRoute
 from src.schedulers.r2_scheduler import r2_scheduler
 from src.routes import userRoute, productRoute, cartRoute, addressableAPIRoute, userOnboardingRoute, \
-    stripeSubscriptionServices, stripeWebhookHandler, mediaUploadRoute, checkOutRoute
+    stripeSubscriptionServices, stripeWebhookHandler, mediaUploadRoute, checkOutRoute, comingSoonRoute
 from src.adminUtils.adminRoutes import approveProviderRoute, admin_provider_routes, stripeAdministrationRoutes
 
 # from src.adminUtils.adminRoutes import approveProviderRoute, admin_provider_routes
@@ -206,6 +206,8 @@ app.include_router(admin_provider_routes.router, tags=['AdminUtils'], prefix='/a
                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
 app.include_router(stripeAdministrationRoutes.router, tags=['StripeAdminUtils'], prefix='/api/v1/admin/stripe',
                    dependencies=[Depends(RateLimiter(times=100, seconds=60))])
+app.include_router(comingSoonRoute.router, tags=['Coming Soon'], prefix='/api/v1',
+                   dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 #
 # app.include_router(newsletterRoute.router, tags=['NotificationRoute'], prefix='/api/v1',
 #                    dependencies=[Depends(RateLimiter(times=5, seconds=60))])

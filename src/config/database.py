@@ -6,6 +6,7 @@ from src.models.userModel import User
 from src.models.stripeModel import StripeSubscriptions
 from src.models.wishlistModel import Wishlist
 from src.models.orderModel import Order
+from src.models.comingSoonModel import ComingSoonModel
 from .settings import settings
 
 
@@ -17,7 +18,7 @@ async def startDB():
 
     # Init beanie with the Product document class
     await init_beanie(database=database,
-                      document_models=[User, Product, Cart, StripeSubscriptions, Wishlist, Order
+                      document_models=[User, Product, Cart, StripeSubscriptions, Wishlist, Order, ComingSoonModel
                                        # SubCategories, Categories, Ratings, ,
                                        # CommissionPayments, ProviderAvailability, Bookings, Newsletters
                                        ]
