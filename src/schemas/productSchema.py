@@ -47,7 +47,6 @@ class ProductCreate(BaseModel):
     price: float = Field(..., gt=0)
     category: str = Field(..., min_length=1)
     stock: int = Field(..., ge=0)  # Must be included in creation payload
-    image: str
     media: List[MediaFile] = Field(default_factory=list)  # ✅ better default
 
     is_recurring: bool = False  # Default to false (one-time)
@@ -63,7 +62,6 @@ class ProductUpdate(BaseModel):
     description: Optional[str] = Field(None, min_length=10)
     price: Optional[float] = Field(None, gt=0)
     category: Optional[str] = Field(None, min_length=1)
-    # image: Optional[str] = None
     status: Optional[ProductStatus] = None
     media: List[MediaFile] = Field(default_factory=list)  # ✅ better default
     stock: Optional[int] = Field(None, ge=0)  # Must be included in update payload
@@ -87,7 +85,6 @@ class ProductRead(BaseModel):
     description: str
     price: float
     category: str
-    image: str
     status: ProductStatus
     created_at: datetime
     updated_at: datetime

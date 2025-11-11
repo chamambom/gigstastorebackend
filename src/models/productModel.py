@@ -7,7 +7,6 @@ from enum import Enum
 from src.schemas.productSchema import MediaFile
 
 
-
 class ProductStatus(str, Enum):
     DRAFT = "draft"
     PUBLISHED = "published"
@@ -23,7 +22,6 @@ class Product(Document):
     description: str = Field(..., min_length=10)
     price: float = Field(..., gt=0)
     category: str = Field(..., min_length=1)
-    image: str  # URL to image
 
     stock: int = Field(..., ge=0)  # Stock must be an integer >= 0
 
@@ -54,7 +52,3 @@ class Product(Document):
         populate_by_name=True,  # Enable from_orm to work with ORM models
         from_attributes=True,  # This allows Pydantic to use aliases
     )
-
-
-
-
