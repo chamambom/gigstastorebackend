@@ -12,7 +12,7 @@ from fastapi_users.db import BeanieUserDatabase, ObjectIDIDMixin
 from httpx_oauth.clients.google import GoogleOAuth2
 from httpx_oauth.clients.facebook import FacebookOAuth2
 
-from commonUtils.enumUtils import StripeProviderStatus
+from src.commonUtils.enumUtils import StripeProviderStatus
 # from app.db import User, get_user_db
 from src.models.userModel import User, get_user_db
 from src.schemas.userSchema import ProviderOnboarding, Address, OnboardingStatus

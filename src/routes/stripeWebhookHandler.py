@@ -4,7 +4,7 @@ import stripe
 import logging
 from typing import Optional
 
-from commonUtils.enumUtils import StripeProviderStatus
+from src.commonUtils.enumUtils import StripeProviderStatus
 from src.crud.userService import get_user_manager, UserManager
 from src.crud.checkOutService import CheckOutService
 from src.config.settings import settings
